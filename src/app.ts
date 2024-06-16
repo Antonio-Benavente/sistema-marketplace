@@ -1,6 +1,6 @@
 import express, { Application } from 'express';
 
-//import Routes from './routes/alumnoRoutes';
+import perfilRoutes from './routes/perfilRoutes';
 
 const app: Application = express();
 
@@ -10,6 +10,6 @@ const app: Application = express();
 app.use(express.json());
 
 //Routes
-//app.use('/api/v1/alumnos',alumnoRoutes);
+app.use('/api/v1/perfiles',perfilRoutes);
 
 export default app;
