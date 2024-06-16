@@ -43,9 +43,12 @@ export const modificarPerfil = async (idPerfil: number, perfil:IPerfil) => {
 }
 
 export const eliminarPerfil = async (idPerfil: number) => {
-    console.log('perfilService::modificarPerfil',idPerfil);
+    console.log('perfilService::eliminarPerfil',idPerfil);
 
-    await prisma.perfiles.delete({
+    await prisma.perfiles.update({
+        data: {
+            estado_auditoria: '0'
+        },
         where: {
             id_perfil: idPerfil
         }
