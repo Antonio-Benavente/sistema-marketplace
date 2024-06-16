@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model categorias_producto {
+  id_categoria       Int       @id(map: "categorias_productos_pkey") @default(autoincrement())
+  nombre             String    @db.VarChar(1024)
+  estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+}
+
+model perfiles {
+  id_perfil          Int       @id @default(autoincrement())
+  descripcion        String    @db.VarChar(1024)
+  estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+}
+
+model productos {
+  id_producto        Int       @id @default(autoincrement())
+  id_categoria       Int
+  id_usuario         Int
+  nombre             String    @db.VarChar(150)
+  detalle            String?   @db.VarChar(1024)
+  precio             Decimal   @db.Decimal(10, 2)
+  stock              Int
+  imagen             String?   @db.VarChar(1024)
+  estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+}
+
+model usuarios {
+  id_usuario         Int       @id @default(autoincrement())
+  id_perfil          Int
+  nombres            String    @db.VarChar(150)
+  apellido_paterno   String    @db.VarChar(150)
+  apellido_materno   String    @db.VarChar(150)
+  nombre_usuario     String    @db.VarChar(150)
+  celular            String    @db.Char(9)
+  email              String    @db.VarChar(1024)
+  password           String    @db.VarChar(1024)
+  estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+}
