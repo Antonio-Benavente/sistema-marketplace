@@ -1,13 +1,15 @@
 import { Request, Response } from "express"
 import * as perfilService from "../services/perfilService";
+import { ResponseModel } from "../models/ResponseModels";
 
 export const insertarPerfil = async (req: Request, res: Response) => {
     console.log('perfilController::insertarPerfil');
     try {
         const response = await perfilService.insertarPerfil(req.body);
-        res.status(200).json(response);
+        res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
-        res.status(500).json({error: error})
+        console.error(error.message);
+        res.status(500).json(ResponseModel.error(error.message));
     }
 }
 
@@ -15,9 +17,10 @@ export const listarPerfiles = async (req: Request, res: Response) => {
     console.log('perfilController::listarPerfiles');
     try {
         const perfiles = await perfilService.listarPerfiles();
-        res.status(200).json(perfiles);
+        res.status(200).json(ResponseModel.success(perfiles));
     } catch (error) {
-        res.status(500).json({error: error})
+        console.error(error.message);
+        res.status(500).json(ResponseModel.error(error.message));
     }
 }
 
@@ -26,9 +29,10 @@ export const obtenerPerfil = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const perfil = await perfilService.obtenerPerfil(Number(id))
-        res.status(200).json(perfil);
+        res.status(200).json(ResponseModel.success(perfil));
     } catch (error) {
-        res.status(500).json({error: error})
+        console.error(error.message);
+        res.status(500).json(ResponseModel.error(error.message));
     }
 }
 
@@ -38,9 +42,10 @@ export const modificarPerfil = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const response = await perfilService.modificarPerfil(Number(id),req.body)
-        res.status(200).json(response);
+        res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
-        res.status(500).json({error: error})
+        console.error(error.message);
+        res.status(500).json(ResponseModel.error(error.message));
     }
 }
 
@@ -49,8 +54,9 @@ export const eliminarPerfil = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const response = await perfilService.eliminarPerfil(Number(id));
-        res.status(200).json(response);
+        res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
-        res.status(500).json({error: error})
+        console.error(error.message);
+        res.status(500).json(ResponseModel.error(error.message));
     }
 }

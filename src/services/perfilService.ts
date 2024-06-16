@@ -6,6 +6,7 @@ import { fromPrismaPerfil, toPrismaPerfil } from "../mappers/perfilMapper";
 const prisma = new PrismaClient();
 
 export const insertarPerfil = async (perfil: IPerfil) => {
+    console.log('perfilService::insertarPerfil');
     await prisma.perfiles.create({
         data: toPrismaPerfil(perfil)
     });
@@ -13,7 +14,12 @@ export const insertarPerfil = async (perfil: IPerfil) => {
 }
 
 export const listarPerfiles = async () => {
-    const perfiles: perfiles[] = await prisma.perfiles.findMany();
+    console.log('perfilService::listarPerfiles');
+    const perfiles: perfiles[] = await prisma.perfiles.findMany({
+        where: {
+            estado_auditoria: '1'
+        }
+    });
     return perfiles.map((perfil: perfiles)=> fromPrismaPerfil(perfil));
 }
 

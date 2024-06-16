@@ -15,7 +15,11 @@ export const insertarCategoria = async (categoria: ICategoria) => {
 
 export const listarCategorias = async () => {
     console.log('categoriaService::listarCategorias');
-    const categorias_producto: categorias_producto[] = await prisma.categorias_producto.findMany();
+    const categorias_producto: categorias_producto[] = await prisma.categorias_producto.findMany({
+        where: {
+            estado_auditoria: '1'
+        }
+    });
     return categorias_producto.map((categoria: categorias_producto)=> fromPrismaCategoria(categoria));
 }
 
