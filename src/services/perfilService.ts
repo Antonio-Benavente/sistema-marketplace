@@ -28,7 +28,8 @@ export const obtenerPerfil = async (idPerfil: number) => {
     
     const perfil: perfiles =  await prisma.perfiles.findUnique({
         where: {
-            id_perfil: idPerfil
+            id_perfil: idPerfil,
+            estado_auditoria: '1'
         }
     });
 

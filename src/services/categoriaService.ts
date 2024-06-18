@@ -28,7 +28,8 @@ export const obtenerCategoria = async (idCategoria: number) => {
     
     const categoria: categorias_producto =  await prisma.categorias_producto.findUnique({
         where: {
-            id_categoria: idCategoria
+            id_categoria: idCategoria,
+            estado_auditoria: '1'
         }
     });
 

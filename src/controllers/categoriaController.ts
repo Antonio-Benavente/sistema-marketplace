@@ -18,9 +18,6 @@ export const listarCategorias = async (req: Request, res: Response) => {
     try {
         const categorias = await categoriaService.listarCategorias();
         res.status(200).json(ResponseModel.success(categorias));
-        where: {
-            estado_auditoria: '1'
-        }
     } catch (error) {
         console.error(error.message);
         res.status(500).json(ResponseModel.error(error.message));
@@ -33,9 +30,6 @@ export const obtenerCategoria = async (req: Request, res: Response) => {
         const { id } = req.params;
         const categoria = await categoriaService.obtenerCategoria(Number(id))
         res.status(200).json(ResponseModel.success(categoria));
-        where: {
-            estado_auditoria: '1'
-        }
     } catch (error) {
         console.error(error.message);
         res.status(500).json(ResponseModel.error(error.message));
