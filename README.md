@@ -6,3 +6,9 @@ Este proyecto es una plataforma de marketplace que permite realizar la compra y 
 
 ## Requisitos
 - Base de datos: SW_SIST_MARKETPLACE
+
+## Comandos
+- npm install -g typescript
+- npm install --save-dev typescript @types/node
+- npx prisma db pull
+- npx prisma generate

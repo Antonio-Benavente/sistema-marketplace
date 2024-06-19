@@ -1,9 +1,9 @@
-import { usuarios, perfiles } from "@prisma/client";
+import { usuarios } from "@prisma/client";
 import { IUsuario } from "../models/usuario";
-import { fromPrismaPerfil } from "./perfilMapper";
 
-export const fromPrismaUsuario = (usuario: usuarios & { perfil: perfiles }): any => ({
-    perfil: fromPrismaPerfil(usuario.perfil),
+export const fromPrismaUsuario = (usuario: usuarios): any=> ({
+    id_usuario: usuario.id_usuario,
+    perfil: usuario.id_perfil,
     nombres: usuario.nombres,
     apellidoPaterno: usuario.apellido_paterno,
     apellidoMaterno: usuario.apellido_materno,
@@ -14,7 +14,7 @@ export const fromPrismaUsuario = (usuario: usuarios & { perfil: perfiles }): any
 });
 
 export const toPrismaUsuario = (usuario: IUsuario): any => ({
-    id_perfil: usuario.perfil.idPerfil,
+    id_perfil: usuario.perfil,
     nombres: usuario.nombres,
     apellido_paterno: usuario.apellidoPaterno,
     apellido_materno: usuario.apellidoMaterno,
@@ -22,4 +22,4 @@ export const toPrismaUsuario = (usuario: IUsuario): any => ({
     celular: usuario.celular,
     email: usuario.email,
     password: usuario.password
-});
+})
