@@ -11,7 +11,7 @@ export const fromPrismaUsuario = (usuario: usuarios): any=> ({
     celular: usuario.celular,
     email: usuario.email,
     password: usuario.password
-});
+})
 
 export const toPrismaUsuario = (usuario: IUsuario): any => ({
     id_perfil: usuario.perfil,

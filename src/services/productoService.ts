@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 export const insertarProducto = async (producto: IProducto) => {
     await prisma.productos.create({
-        data: toPrismaProducto(producto),
+        data: toPrismaProducto(producto)
     });
     return RESPONSE_INSERT_OK;
 }
@@ -38,7 +38,6 @@ export const modificarProducto = async (idProducto: number, producto:IProducto) 
             id_producto: idProducto
         }
     });
-
     return RESPONSE_UPDATE_OK;
 }
 
@@ -51,6 +50,5 @@ export const eliminarProducto = async (idProducto: number) => {
             id_producto: idProducto
         }
     });
-    
     return RESPONSE_DELETE_OK;
 }

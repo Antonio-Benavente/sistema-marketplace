@@ -6,7 +6,6 @@ import { fromPrismaPerfil, toPrismaPerfil } from "../mappers/perfilMapper";
 const prisma = new PrismaClient();
 
 export const insertarPerfil = async (perfil: IPerfil) => {
-    console.log('perfilService::insertarPerfil');
     await prisma.perfiles.create({
         data: toPrismaPerfil(perfil)
     });
@@ -14,7 +13,6 @@ export const insertarPerfil = async (perfil: IPerfil) => {
 }
 
 export const listarPerfiles = async () => {
-    console.log('perfilService::listarPerfiles');
     const perfiles: perfiles[] = await prisma.perfiles.findMany({
         where: {
             estado_auditoria: '1'
@@ -24,34 +22,26 @@ export const listarPerfiles = async () => {
 }
 
 export const obtenerPerfil = async (idPerfil: number) => {
-    console.log('perfilService::obtenerPerfil',idPerfil);
-    
     const perfil: perfiles =  await prisma.perfiles.findUnique({
         where: {
             id_perfil: idPerfil,
             estado_auditoria: '1'
         }
     });
-
     return fromPrismaPerfil(perfil);
 }
 
 export const modificarPerfil = async (idPerfil: number, perfil:IPerfil) => {
-    console.log('perfilService::modificarPerfil',idPerfil,perfil);
-
     await prisma.perfiles.update({
         data: toPrismaPerfil(perfil),
         where:{
             id_perfil: idPerfil
         }
     });
-
     return RESPONSE_UPDATE_OK;
 }
 
 export const eliminarPerfil = async (idPerfil: number) => {
-    console.log('perfilService::eliminarPerfil',idPerfil);
-
     await prisma.perfiles.update({
         data: {
             estado_auditoria: '0'
@@ -60,6 +50,5 @@ export const eliminarPerfil = async (idPerfil: number) => {
             id_perfil: idPerfil
         }
     });
-    
     return RESPONSE_DELETE_OK;
 }

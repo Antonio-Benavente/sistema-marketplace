@@ -6,7 +6,6 @@ import { fromPrismaCategoria, toPrismaCategoria } from "../mappers/categoriaMapp
 const prisma = new PrismaClient();
 
 export const insertarCategoria = async (categoria: ICategoria) => {
-    console.log('categoriaService::insertarCategoria');
     await prisma.categorias_producto.create({
         data: toPrismaCategoria(categoria)
     });
@@ -14,7 +13,6 @@ export const insertarCategoria = async (categoria: ICategoria) => {
 }
 
 export const listarCategorias = async () => {
-    console.log('categoriaService::listarCategorias');
     const categorias_producto: categorias_producto[] = await prisma.categorias_producto.findMany({
         where: {
             estado_auditoria: '1'
@@ -24,34 +22,26 @@ export const listarCategorias = async () => {
 }
 
 export const obtenerCategoria = async (idCategoria: number) => {
-    console.log('categoriaService::obtenerCategoria',idCategoria);
-    
     const categoria: categorias_producto =  await prisma.categorias_producto.findUnique({
         where: {
             id_categoria: idCategoria,
             estado_auditoria: '1'
         }
     });
-
     return fromPrismaCategoria(categoria);
 }
 
 export const modificarCategoria = async (idCategoria: number, categoria:ICategoria) => {
-    console.log('categoriaService::modificarCategoria',idCategoria,categoria);
-
     await prisma.categorias_producto.update({
         data: toPrismaCategoria(categoria),
         where:{
             id_categoria: idCategoria
         }
     });
-
     return RESPONSE_UPDATE_OK;
 }
 
 export const eliminarCategoria = async (idCategoria: number) => {
-    console.log('categoriaService::eliminarCategoria',idCategoria);
-
     await prisma.categorias_producto.update({
         data: {
             estado_auditoria: '0'
@@ -60,6 +50,5 @@ export const eliminarCategoria = async (idCategoria: number) => {
             id_categoria: idCategoria
         }
     });
-    
     return RESPONSE_DELETE_OK;
 }

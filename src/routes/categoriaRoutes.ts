@@ -7,6 +7,6 @@ router.post('/',insertarCategoria);
 router.get('/',listarCategorias);
 router.get('/:id',obtenerCategoria);
 router.put('/:id',modificarCategoria);
-router.delete('/:id',eliminarCategoria);
+router.patch('/:id',eliminarCategoria);
 
-export default router
+export default router;

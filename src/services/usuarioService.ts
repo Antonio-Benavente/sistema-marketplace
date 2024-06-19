@@ -22,26 +22,22 @@ export const listarUsuarios = async () => {
 }
 
 export const obtenerUsuario = async (idUsuario: number) => {
-    
     const usuario: usuarios =  await prisma.usuarios.findUnique({
         where: {
             id_usuario: idUsuario,
             estado_auditoria: '1'
         }
     });
-
     return fromPrismaUsuario(usuario);
 }
 
 export const modificarUsuario = async (idUsuario: number, usuario:IUsuario) => {
-
     await prisma.usuarios.update({
         data: toPrismaUsuario(usuario),
         where:{
             id_usuario: idUsuario
         }
     });
-
     return RESPONSE_UPDATE_OK;
 }
 
@@ -54,6 +50,5 @@ export const eliminarUsuario = async (idUsuario: number) => {
             id_usuario: idUsuario
         }
     });
-    
     return RESPONSE_DELETE_OK;
 }

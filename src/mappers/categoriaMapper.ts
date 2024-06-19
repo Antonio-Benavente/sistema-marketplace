@@ -1,5 +1,5 @@
-import { categorias_producto } from "@prisma/client"
-import { ICategoria } from "../models/categoria"
+import { categorias_producto } from "@prisma/client";
+import { ICategoria } from "../models/categoria";
 
 export const fromPrismaCategoria = (categoria: categorias_producto): any=> ({
     idCategoria: categoria.id_categoria,

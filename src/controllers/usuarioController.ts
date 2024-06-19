@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import { Request, Response } from "express";
 import * as usuarioService from "../services/usuarioService";
 import { ResponseModel } from "../models/ResponseModels";
 
@@ -25,7 +25,7 @@ export const listarUsuarios = async (req: Request, res: Response) => {
 export const obtenerUsuario = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const usuario = await usuarioService.obtenerUsuario(Number(id))
+        const usuario = await usuarioService.obtenerUsuario(Number(id));
         res.status(200).json(ResponseModel.success(usuario));
     } catch (error) {
         console.error(error.message);
@@ -37,7 +37,7 @@ export const obtenerUsuario = async (req: Request, res: Response) => {
 export const modificarUsuario = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const response = await usuarioService.modificarUsuario(Number(id),req.body)
+        const response = await usuarioService.modificarUsuario(Number(id),req.body);
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);
