@@ -1,8 +1,8 @@
 import { IPerfil } from "./perfil";
 
-export interface ICurso {
+export interface IUsuario {
     idUsuario:number;
-    idPerfil:IPerfil;
+    perfil:IPerfil;
     nombres:string;
     apellidoPaterno:string;
     apellidoMaterno:string;
