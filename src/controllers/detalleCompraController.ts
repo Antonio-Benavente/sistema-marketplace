@@ -1,17 +1,18 @@
 import { Request, Response } from "express";
-import * as categoriaService from "../services/categoriaService";
+import * as detalleCompraService from "../services/detalleCompraService";
 import { ResponseModel } from "../models/ResponseModels";
-import { insertarCategoriaSchema, modificarCategoriaSchema } from "../schemas/categoriaSchema";
+import { insertarCompraSchema, modificarCompraSchema } from "../schemas/compraSchema";
+import { insertarDetalleCompraSchema, modificarDetalleCompraSchema } from "../schemas/detalleCompraSchema";
 
-export const insertarCategoria = async (req: Request, res: Response) => {
+export const insertarDetalleCompra = async (req: Request, res: Response) => {
     try {
-        const { error } = insertarCategoriaSchema.validate(req.body);
+        const { error } = insertarDetalleCompraSchema.validate(req.body);
         if(error){
             console.error(error.message);
             res.status(400).json(ResponseModel.error(error.message, 400));
             return;
         }
-        const response = await categoriaService.insertarCategoria(req.body);
+        const response = await detalleCompraService.insertarDetalleCompra(req.body);
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);
@@ -19,38 +20,37 @@ export const insertarCategoria = async (req: Request, res: Response) => {
     }
 }
 
-export const listarCategorias = async (req: Request, res: Response) => {
+export const listarDetallesCompras = async (req: Request, res: Response) => {
     try {
-        const categorias = await categoriaService.listarCategorias();
-        res.status(200).json(ResponseModel.success(categorias));
+        const detallesCompras = await detalleCompraService.listarDetallesCompras();
+        res.status(200).json(ResponseModel.success(detallesCompras));
     } catch (error) {
         console.error(error.message);
         res.status(500).json(ResponseModel.error(error.message));
     }
 }
 
-export const obtenerCategoria = async (req: Request, res: Response) => {
+export const obtenerDetalleCompra = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const categoria = await categoriaService.obtenerCategoria(Number(id));
-        res.status(200).json(ResponseModel.success(categoria));
+        const detalleCompra = await detalleCompraService.obtenerDetalleCompra(Number(id));
+        res.status(200).json(ResponseModel.success(detalleCompra));
     } catch (error) {
         console.error(error.message);
         res.status(500).json(ResponseModel.error(error.message));
     }
 }
 
-
-export const modificarCategoria = async (req: Request, res: Response) => {
+export const modificarDetalleCompra = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { error } = modificarCategoriaSchema.validate(req.body);
+        const { error } = modificarDetalleCompraSchema.validate(req.body);
         if(error){
             console.error(error.message);
             res.status(400).json(ResponseModel.error(error.message, 400));
             return;
         }
-        const response = await categoriaService.modificarCategoria(Number(id),req.body);
+        const response = await detalleCompraService.modificarDetalleCompra(Number(id),req.body);
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);
@@ -58,10 +58,10 @@ export const modificarCategoria = async (req: Request, res: Response) => {
     }
 }
 
-export const eliminarCategoria = async (req: Request, res: Response) => {
+export const eliminarDetalleCompra = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const response = await categoriaService.eliminarCategoria(Number(id));
+        const response = await detalleCompraService.eliminarDetalleCompra(Number(id));
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);

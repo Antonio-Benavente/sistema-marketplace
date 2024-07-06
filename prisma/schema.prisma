@@ -7,15 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model categorias_producto {
-  id_categoria       Int         @id(map: "categorias_productos_pkey") @default(autoincrement())
-  nombre             String      @db.VarChar(1024)
-  estado_auditoria   String      @default(dbgenerated("1")) @db.Char(1)
-  fecha_creacion     DateTime    @default(now()) @db.Timestamp(6)
-  fecha_modificacion DateTime?   @db.Timestamp(6)
-  productos          productos[]
-}
-
 model perfiles {
   id_perfil          Int        @id @default(autoincrement())
   descripcion        String     @db.VarChar(1024)
@@ -26,21 +17,21 @@ model perfiles {
 }
 
 model productos {
-  id_producto         Int                 @id @default(autoincrement())
+  id_producto         Int              @id @default(autoincrement())
   id_categoria        Int
   id_usuario          Int
-  nombre              String              @db.VarChar(150)
-  descripcion         String?             @db.VarChar(1024)
-  precio              Decimal             @db.Decimal(10, 2)
+  nombre              String           @db.VarChar(150)
+  descripcion         String?          @db.VarChar(1024)
+  precio              Decimal          @db.Decimal(10, 2)
   stock               Int
-  imagen              String?             @db.VarChar(1024)
-  estado_auditoria    String              @default(dbgenerated("1")) @db.Char(1)
-  fecha_creacion      DateTime            @default(now()) @db.Timestamp(6)
-  fecha_modificacion  DateTime?           @db.Timestamp(6)
+  imagen              String?          @db.VarChar(1024)
+  estado_auditoria    String           @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion      DateTime         @default(now()) @db.Timestamp(6)
+  fecha_modificacion  DateTime?        @db.Timestamp(6)
   comentarios         comentarios[]
   detalle_compra      detalle_compra[]
-  categorias_producto categorias_producto @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "fk_producto_categoria")
-  usuarios            usuarios            @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_producto_usuario")
+  categorias_producto categorias       @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "fk_producto_categoria")
+  usuarios            usuarios         @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_producto_usuario")
 }
 
 model usuarios {
@@ -56,9 +47,9 @@ model usuarios {
   estado_auditoria   String        @default(dbgenerated("1")) @db.Char(1)
   fecha_creacion     DateTime      @default(now()) @db.Timestamp(6)
   fecha_modificacion DateTime?     @db.Timestamp(6)
+  bitacora           bitacora[]
   comentarios        comentarios[]
   compras            compras[]
-  historial          historial[]
   productos          productos[]
   perfiles           perfiles      @relation(fields: [id_perfil], references: [id_perfil], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_perfil")
 }
@@ -85,6 +76,7 @@ model compras {
   estado_auditoria   String           @default(dbgenerated("1")) @db.Char(1)
   fecha_creacion     DateTime         @default(now()) @db.Timestamp(6)
   fecha_modificacion DateTime?        @db.Timestamp(6)
+  numero_tarjeta     String?          @db.VarChar(16)
   estados_compra     estados_compra   @relation(fields: [id_estado], references: [id_estado], onDelete: NoAction, onUpdate: NoAction, map: "fk_compra_estado")
   usuarios           usuarios         @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_compra_usuario")
   detalle_compra     detalle_compra[]
@@ -97,8 +89,7 @@ model detalle_compra {
   cantidad             Int
   precio               Decimal   @db.Decimal(10, 2)
   descuento            Decimal   @db.Decimal(10, 2)
-  igv                  Decimal   @db.Decimal(10, 2)
-  descripcion          String    @db.VarChar(1024)
+  impuesto             Decimal   @db.Decimal(10, 2)
   departamento_entrega String    @db.VarChar(1024)
   distrito_entrega     String    @db.VarChar(1024)
   direccion_entrega    String    @db.VarChar(1024)
@@ -109,13 +100,16 @@ model detalle_compra {
 }
 
 model estados_compra {
-  id_estado   Int       @id @default(autoincrement())
-  descripcion String    @db.VarChar(250)
-  compras     compras[]
+  id_estado          Int       @id @default(autoincrement())
+  descripcion        String    @db.VarChar(250)
+  estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+  compras            compras[]
 }
 
-model historial {
-  id_historial       Int       @id @default(autoincrement())
+model bitacora {
+  id_bitacora        Int       @id(map: "historial_pkey") @default(autoincrement())
   id_usuario         Int
   accion             String    @db.Char(100)
   fecha_accion       DateTime  @db.Timestamptz(6)
@@ -123,4 +117,13 @@ model historial {
   fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
   fecha_modificacion DateTime? @db.Timestamp(6)
   usuarios           usuarios  @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_historial_usuario")
+}
+
+model categorias {
+  id_categoria       Int         @id(map: "categorias_productos_pkey") @default(autoincrement())
+  nombre             String      @db.VarChar(1024)
+  estado_auditoria   String      @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime    @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime?   @db.Timestamp(6)
+  productos          productos[]
 }

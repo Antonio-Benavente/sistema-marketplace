@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
-import * as categoriaService from "../services/categoriaService";
+import * as compraService from "../services/compraService";
 import { ResponseModel } from "../models/ResponseModels";
-import { insertarCategoriaSchema, modificarCategoriaSchema } from "../schemas/categoriaSchema";
+import { insertarCompraSchema, modificarCompraSchema } from "../schemas/compraSchema";
 
-export const insertarCategoria = async (req: Request, res: Response) => {
+export const insertarCompra = async (req: Request, res: Response) => {
     try {
-        const { error } = insertarCategoriaSchema.validate(req.body);
+        const { error } = insertarCompraSchema.validate(req.body);
         if(error){
             console.error(error.message);
             res.status(400).json(ResponseModel.error(error.message, 400));
             return;
         }
-        const response = await categoriaService.insertarCategoria(req.body);
+        const response = await compraService.insertarCompra(req.body);
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);
@@ -19,38 +19,37 @@ export const insertarCategoria = async (req: Request, res: Response) => {
     }
 }
 
-export const listarCategorias = async (req: Request, res: Response) => {
+export const listarCompras = async (req: Request, res: Response) => {
     try {
-        const categorias = await categoriaService.listarCategorias();
-        res.status(200).json(ResponseModel.success(categorias));
+        const compras = await compraService.listarCompras();
+        res.status(200).json(ResponseModel.success(compras));
     } catch (error) {
         console.error(error.message);
         res.status(500).json(ResponseModel.error(error.message));
     }
 }
 
-export const obtenerCategoria = async (req: Request, res: Response) => {
+export const obtenerCompra = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const categoria = await categoriaService.obtenerCategoria(Number(id));
-        res.status(200).json(ResponseModel.success(categoria));
+        const compra = await compraService.obtenerCompra(Number(id));
+        res.status(200).json(ResponseModel.success(compra));
     } catch (error) {
         console.error(error.message);
         res.status(500).json(ResponseModel.error(error.message));
     }
 }
 
-
-export const modificarCategoria = async (req: Request, res: Response) => {
+export const modificarCompra = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { error } = modificarCategoriaSchema.validate(req.body);
+        const { error } = modificarCompraSchema.validate(req.body);
         if(error){
             console.error(error.message);
             res.status(400).json(ResponseModel.error(error.message, 400));
             return;
         }
-        const response = await categoriaService.modificarCategoria(Number(id),req.body);
+        const response = await compraService.modificarCompra(Number(id),req.body);
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);
@@ -58,10 +57,10 @@ export const modificarCategoria = async (req: Request, res: Response) => {
     }
 }
 
-export const eliminarCategoria = async (req: Request, res: Response) => {
+export const eliminarCompra = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const response = await categoriaService.eliminarCategoria(Number(id));
+        const response = await compraService.eliminarCompra(Number(id));
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);

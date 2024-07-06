@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
-import * as categoriaService from "../services/categoriaService";
+import * as comentarioService from "../services/comentarioService";
 import { ResponseModel } from "../models/ResponseModels";
-import { insertarCategoriaSchema, modificarCategoriaSchema } from "../schemas/categoriaSchema";
+import { insertarComentarioSchema, modificarComentarioSchema } from "../schemas/comentarioSchema";
 
-export const insertarCategoria = async (req: Request, res: Response) => {
+export const insertarComentario = async (req: Request, res: Response) => {
     try {
-        const { error } = insertarCategoriaSchema.validate(req.body);
+        const { error } = insertarComentarioSchema.validate(req.body);
         if(error){
             console.error(error.message);
             res.status(400).json(ResponseModel.error(error.message, 400));
             return;
         }
-        const response = await categoriaService.insertarCategoria(req.body);
+        const response = await comentarioService.insertarComentario(req.body);
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);
@@ -19,38 +19,37 @@ export const insertarCategoria = async (req: Request, res: Response) => {
     }
 }
 
-export const listarCategorias = async (req: Request, res: Response) => {
+export const listarComentarios = async (req: Request, res: Response) => {
     try {
-        const categorias = await categoriaService.listarCategorias();
-        res.status(200).json(ResponseModel.success(categorias));
+        const comentarios = await comentarioService.listarComentarios();
+        res.status(200).json(ResponseModel.success(comentarios));
     } catch (error) {
         console.error(error.message);
         res.status(500).json(ResponseModel.error(error.message));
     }
 }
 
-export const obtenerCategoria = async (req: Request, res: Response) => {
+export const obtenerComentario = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const categoria = await categoriaService.obtenerCategoria(Number(id));
-        res.status(200).json(ResponseModel.success(categoria));
+        const comentario = await comentarioService.obtenerComentario(Number(id));
+        res.status(200).json(ResponseModel.success(comentario));
     } catch (error) {
         console.error(error.message);
         res.status(500).json(ResponseModel.error(error.message));
     }
 }
 
-
-export const modificarCategoria = async (req: Request, res: Response) => {
+export const modificarComentario = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { error } = modificarCategoriaSchema.validate(req.body);
+        const { error } = modificarComentarioSchema.validate(req.body);
         if(error){
             console.error(error.message);
             res.status(400).json(ResponseModel.error(error.message, 400));
             return;
         }
-        const response = await categoriaService.modificarCategoria(Number(id),req.body);
+        const response = await comentarioService.modificarComentario(Number(id),req.body);
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);
@@ -58,10 +57,10 @@ export const modificarCategoria = async (req: Request, res: Response) => {
     }
 }
 
-export const eliminarCategoria = async (req: Request, res: Response) => {
+export const eliminarComentario = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const response = await categoriaService.eliminarCategoria(Number(id));
+        const response = await comentarioService.eliminarComentario(Number(id));
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);

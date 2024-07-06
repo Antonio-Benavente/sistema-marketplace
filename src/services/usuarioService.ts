@@ -13,22 +13,28 @@ export const insertarUsuario = async (usuario: IUsuario) => {
 }
 
 export const listarUsuarios = async () => {
-    const usuarios : usuarios[] = await prisma.usuarios.findMany({
+    const usuarios : any[] = await prisma.usuarios.findMany({
+        include: {
+            perfiles: true
+        },
         where: {
             estado_auditoria: '1'
         }
     });
-    return usuarios.map((usuario: usuarios)=> fromPrismaUsuario(usuario));
+    return usuarios.map((usuario: any)=> fromPrismaUsuario(usuario, usuario.perfiles));
 }
 
 export const obtenerUsuario = async (idUsuario: number) => {
-    const usuario: usuarios =  await prisma.usuarios.findUnique({
+    const usuario: any =  await prisma.usuarios.findUnique({
+        include: {
+            perfiles: true
+        },
         where: {
             id_usuario: idUsuario,
             estado_auditoria: '1'
         }
     });
-    return fromPrismaUsuario(usuario);
+    return fromPrismaUsuario(usuario, usuario.perfiles);
 }
 
 export const modificarUsuario = async (idUsuario: number, usuario:IUsuario) => {

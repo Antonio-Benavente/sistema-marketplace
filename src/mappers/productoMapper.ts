@@ -1,9 +1,10 @@
-import { productos } from "@prisma/client";
+import { categorias, productos } from "@prisma/client";
 import { IProducto } from "../models/producto";
+import { fromPrismaCategoria } from "./categoriaMapper";
 
-export const fromPrismaProducto = (producto: productos): any=> ({
+export const fromPrismaProducto = (producto: productos, categoria: categorias): any=> ({
     idProducto: producto.id_producto,
-    categoria: producto.id_categoria,
+    categoria: fromPrismaCategoria(categoria),
     usuario: producto.id_usuario,
     nombre: producto.nombre,
     descripcion: producto.descripcion,

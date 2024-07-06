@@ -1,4 +1,4 @@
-import { PrismaClient, categorias_producto } from "@prisma/client";
+import { PrismaClient, categorias} from "@prisma/client";
 import { ICategoria } from "../models/categoria";
 import { RESPONSE_DELETE_OK, RESPONSE_INSERT_OK, RESPONSE_UPDATE_OK } from "../shared/constants";
 import { fromPrismaCategoria, toPrismaCategoria } from "../mappers/categoriaMapper";
@@ -6,23 +6,23 @@ import { fromPrismaCategoria, toPrismaCategoria } from "../mappers/categoriaMapp
 const prisma = new PrismaClient();
 
 export const insertarCategoria = async (categoria: ICategoria) => {
-    await prisma.categorias_producto.create({
+    await prisma.categorias.create({
         data: toPrismaCategoria(categoria)
     });
     return RESPONSE_INSERT_OK;
 }
 
 export const listarCategorias = async () => {
-    const categorias_producto: categorias_producto[] = await prisma.categorias_producto.findMany({
+    const categorias_producto: categorias[] = await prisma.categorias.findMany({
         where: {
             estado_auditoria: '1'
         }
     });
-    return categorias_producto.map((categoria: categorias_producto)=> fromPrismaCategoria(categoria));
+    return categorias_producto.map((categoria: categorias)=> fromPrismaCategoria(categoria));
 }
 
 export const obtenerCategoria = async (idCategoria: number) => {
-    const categoria: categorias_producto =  await prisma.categorias_producto.findUnique({
+    const categoria: categorias =  await prisma.categorias.findUnique({
         where: {
             id_categoria: idCategoria,
             estado_auditoria: '1'
@@ -32,7 +32,7 @@ export const obtenerCategoria = async (idCategoria: number) => {
 }
 
 export const modificarCategoria = async (idCategoria: number, categoria:ICategoria) => {
-    await prisma.categorias_producto.update({
+    await prisma.categorias.update({
         data: toPrismaCategoria(categoria),
         where:{
             id_categoria: idCategoria
@@ -42,7 +42,7 @@ export const modificarCategoria = async (idCategoria: number, categoria:ICategor
 }
 
 export const eliminarCategoria = async (idCategoria: number) => {
-    await prisma.categorias_producto.update({
+    await prisma.categorias.update({
         data: {
             estado_auditoria: '0'
         },

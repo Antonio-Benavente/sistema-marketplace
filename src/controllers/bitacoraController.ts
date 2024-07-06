@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
-import * as categoriaService from "../services/categoriaService";
+import * as bitacoraService from "../services/bitacoraService";
 import { ResponseModel } from "../models/ResponseModels";
-import { insertarCategoriaSchema, modificarCategoriaSchema } from "../schemas/categoriaSchema";
+import { insertarBitacoraSchema, modificarBitacoraSchema } from "../schemas/bitacoraSchema";
 
-export const insertarCategoria = async (req: Request, res: Response) => {
+export const insertarBitacora = async (req: Request, res: Response) => {
     try {
-        const { error } = insertarCategoriaSchema.validate(req.body);
+        const { error } = insertarBitacoraSchema.validate(req.body);
         if(error){
             console.error(error.message);
             res.status(400).json(ResponseModel.error(error.message, 400));
             return;
         }
-        const response = await categoriaService.insertarCategoria(req.body);
+        const response = await bitacoraService.insertarBitacora(req.body);
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);
@@ -19,38 +19,37 @@ export const insertarCategoria = async (req: Request, res: Response) => {
     }
 }
 
-export const listarCategorias = async (req: Request, res: Response) => {
+export const listarBitacoras = async (req: Request, res: Response) => {
     try {
-        const categorias = await categoriaService.listarCategorias();
-        res.status(200).json(ResponseModel.success(categorias));
+        const bitacoras = await bitacoraService.listarBitacoras();
+        res.status(200).json(ResponseModel.success(bitacoras));
     } catch (error) {
         console.error(error.message);
         res.status(500).json(ResponseModel.error(error.message));
     }
 }
 
-export const obtenerCategoria = async (req: Request, res: Response) => {
+export const obtenerBitacora = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const categoria = await categoriaService.obtenerCategoria(Number(id));
-        res.status(200).json(ResponseModel.success(categoria));
+        const bitacora = await bitacoraService.obtenerBitacora(Number(id));
+        res.status(200).json(ResponseModel.success(bitacora));
     } catch (error) {
         console.error(error.message);
         res.status(500).json(ResponseModel.error(error.message));
     }
 }
 
-
-export const modificarCategoria = async (req: Request, res: Response) => {
+export const modificarBitacora = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { error } = modificarCategoriaSchema.validate(req.body);
+        const { error } = modificarBitacoraSchema.validate(req.body);
         if(error){
             console.error(error.message);
             res.status(400).json(ResponseModel.error(error.message, 400));
             return;
         }
-        const response = await categoriaService.modificarCategoria(Number(id),req.body);
+        const response = await bitacoraService.modificarBitacora(Number(id),req.body);
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);
@@ -58,10 +57,10 @@ export const modificarCategoria = async (req: Request, res: Response) => {
     }
 }
 
-export const eliminarCategoria = async (req: Request, res: Response) => {
+export const eliminarBitacora = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const response = await categoriaService.eliminarCategoria(Number(id));
+        const response = await bitacoraService.eliminarBitacora(Number(id));
         res.status(200).json(ResponseModel.success(null,response));
     } catch (error) {
         console.error(error.message);

@@ -13,22 +13,28 @@ export const insertarProducto = async (producto: IProducto) => {
 }
 
 export const listarProductos = async () => {
-    const productos : productos[] = await prisma.productos.findMany({
+    const productos : any[] = await prisma.productos.findMany({
+        include: {
+            categorias_producto: true
+        },
         where: {
             estado_auditoria: '1'
         }
     });
-    return productos.map((producto: productos)=> fromPrismaProducto(producto));
+    return productos.map((producto: any)=> fromPrismaProducto(producto, producto.categorias_producto));
 }
 
 export const obtenerProducto = async (idProducto: number) => {
-    const producto: productos =  await prisma.productos.findUnique({
+    const producto: any =  await prisma.productos.findUnique({
+        include: {
+            categorias_producto: true
+        },
         where: {
             id_producto: idProducto,
             estado_auditoria: '1'
         }
     });
-    return fromPrismaProducto(producto);
+    return fromPrismaProducto(producto, producto.categorias_producto);
 }
 
 export const modificarProducto = async (idProducto: number, producto:IProducto) => {

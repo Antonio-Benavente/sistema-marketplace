@@ -15,8 +15,7 @@ export class ResponseModel {
         return new ResponseModel(true,message,200,data);
     }
 
-    static error(message: string){
+    static error(message: string, code: number = 500){
         return new ResponseModel(false,message,500,null);
     }
-
 }
