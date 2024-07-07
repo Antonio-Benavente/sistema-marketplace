@@ -19,42 +19,42 @@ const swaggerOptions: Options = {
     ],
     tags: [
       {
-        name: 'usuarios',
+        name: 'Usuarios',
         description: 'Este endpoint maneja todo el CRUD de la tabla usuarios. Incluye creación, lectura, actualización y eliminación de usuarios.',
       },
       {
-        name: 'insertar',
-        description: 'Inserta un nuevo dato a la tabla especificada de la base de datos, permitiendo la creación de nuevos registros.',
-      },
-      {
-        name: 'listar',
-        description: 'Lista todos los datos de la tabla especificada de la base de datos, proporcionando una visión general de los registros.',
-      },
-      {
-        name: 'listarID',
-        description: 'Lista el dato por el id de la tabla especificada de la base de datos, permitiendo la consulta de un registro específico.',
-      },
-      {
-        name: 'actualizar',
-        description: 'Actualiza un dato existente en la tabla especificada de la base de datos, permitiendo modificar registros previamente creados.',
-      },
-      {
-        name: 'eliminar',
-        description: 'Actualiza el estado de un usuario a inactivo (eliminación lógica).',
-      },
-      {
-        name: 'productos',
+        name: 'Productos',
         description: 'Este endpoint maneja todo el CRUD de la tabla productos. Incluye creación, lectura, actualización y eliminación de usuarios.',
       },
       {
-        name: 'perfiles',
+        name: 'Perfiles',
         description: 'Este endpoint maneja todo el CRUD de la tabla perfiles. Incluye creación, lectura, actualización y eliminación de usuarios.',
+      },
+      {
+        name: 'Insertar',
+        description: 'Inserta un nuevo dato a la tabla especificada de la base de datos, permitiendo la creación de nuevos registros.',
+      },
+      {
+        name: 'Listar',
+        description: 'Lista todos los datos de la tabla especificada de la base de datos, proporcionando una visión general de los registros.',
+      },
+      {
+        name: 'Listar ID',
+        description: 'Lista el dato por el id de la tabla especificada de la base de datos, permitiendo la consulta de un registro específico.',
+      },
+      {
+        name: 'Actualizar',
+        description: 'Actualiza un dato existente en la tabla especificada de la base de datos, permitiendo modificar registros previamente creados.',
+      },
+      {
+        name: 'Eliminar',
+        description: 'Actualiza el estado de un campo a inactivo (eliminación lógica).',
       }
     ],
     paths: {
       '/api/v1/usuarios': {
         post: {
-          tags: ['usuarios', 'insertar'],
+          tags: ['Usuarios', 'Insertar'],
           summary: 'Inserta un nuevo dato a la tabla usuarios de la base de datos.',
           parameters: [{ $ref: '#/components/parameters/token' }],
           requestBody: {
@@ -70,7 +70,7 @@ const swaggerOptions: Options = {
               description: '(Ok) Usuario insertado correctamente en la base de datos',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/ExitoUsuariosPost' },
+                  schema: { $ref: '#/components/schemas/ExitoPost' },
                 },
               },
             },
@@ -81,7 +81,7 @@ const swaggerOptions: Options = {
           },
         },
         get: {
-          tags: ['usuarios', 'listar'],
+          tags: ['Usuarios', 'Listar'],
           summary: 'Lista todos los usuarios de la tabla usuarios de la base de datos.',
           parameters: [{ $ref: '#/components/parameters/token' }],
           responses: {
@@ -89,7 +89,7 @@ const swaggerOptions: Options = {
               description: '(Ok) Lista de usuarios obtenida correctamente desde la base de datos',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/ExitoUsuariosGetID' }, // Reutilizando el esquema de éxito de listar por ID
+                  schema: { $ref: '#/components/schemas/ExitoUsuariosGetID' },
                 },
               },
             },
@@ -102,7 +102,7 @@ const swaggerOptions: Options = {
       },
       '/api/v1/usuarios/{id_usuario}': {
         get: {
-          tags: ['usuarios', 'listarID'],
+          tags: ['Usuarios', 'Listar ID'],
           summary: 'Lista el usuario por el id de la tabla usuarios de la base de datos.',
           parameters: [
             { $ref: '#/components/parameters/token' },
@@ -130,7 +130,7 @@ const swaggerOptions: Options = {
           },
         },
         put: {
-          tags: ['usuarios', 'actualizar'],
+          tags: ['Usuarios', 'Actualizar'],
           summary: 'Actualiza un usuario existente en la tabla usuarios de la base de datos.',
           parameters: [
             { $ref: '#/components/parameters/token' },
@@ -155,7 +155,7 @@ const swaggerOptions: Options = {
               description: '(Ok) Usuario actualizado correctamente en la base de datos',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/ExitoUsuariosPost' },
+                  schema: { $ref: '#/components/schemas/ExitoPost' },
                 },
               },
             },
@@ -165,8 +165,8 @@ const swaggerOptions: Options = {
             500: { $ref: '#/components/responses/ServerError' },
           },
         },
-        delete: {
-          tags: ['usuarios', 'eliminar'],
+        patch: {
+          tags: ['Usuarios', 'Eliminar'],
           summary: 'Actualiza el estado de un usuario a inactivo (eliminación lógica) en la base de datos.',
           parameters: [
             { $ref: '#/components/parameters/token' },
@@ -198,7 +198,7 @@ const swaggerOptions: Options = {
       //PRODUCTOS
       '/api/v1/productos': {
         post: {
-          tags: ['productos', 'insertar'],
+          tags: ['Productos', 'Insertar'],
           summary: 'Inserta un nuevo dato a la tabla productos de la base de datos.',
           parameters: [{ $ref: '#/components/parameters/token' }],
           requestBody: {
@@ -211,10 +211,10 @@ const swaggerOptions: Options = {
           },
           responses: {
             200: {
-              description: '(Ok) Productos insertado correctamente en la base de datos',
+              description: '(Ok) Producto insertado correctamente en la base de datos',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/ExitoProductosPost' },
+                  schema: { $ref: '#/components/schemas/ExitoPost' },
                 },
               },
             },
@@ -225,7 +225,7 @@ const swaggerOptions: Options = {
           },
         },
         get: {
-          tags: ['productos', 'listar'],
+          tags: ['Productos', 'Listar'],
           summary: 'Lista todos los productos de la tabla productos de la base de datos.',
           parameters: [{ $ref: '#/components/parameters/token' }],
           responses: {
@@ -233,7 +233,7 @@ const swaggerOptions: Options = {
               description: '(Ok) Lista de productos obtenida correctamente desde la base de datos',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/ExitoProductosGetID' }, // Reutilizando el esquema de éxito de listar por ID
+                  schema: { $ref: '#/components/schemas/ExitoProductosGetID' },
                 },
               },
             },
@@ -246,14 +246,14 @@ const swaggerOptions: Options = {
       },
       '/api/v1/productos/{id_producto}': {
         get: {
-          tags: ['productos', 'listarID'],
+          tags: ['Productos', 'Listar ID'],
           summary: 'Lista el producto por el id de la tabla productos de la base de datos.',
           parameters: [
             { $ref: '#/components/parameters/token' },
             {
               name: 'id_producto',
               in: 'path',
-              description: 'Identificador del prodcuto a obtener, necesario para la consulta específica.',
+              description: 'Identificador del producto a obtener, necesario para la consulta específica.',
               required: true,
               schema: { type: 'integer' },
             },
@@ -274,7 +274,7 @@ const swaggerOptions: Options = {
           },
         },
         put: {
-          tags: ['productos', 'actualizar'],
+          tags: ['Productos', 'Actualizar'],
           summary: 'Actualiza un producto existente en la tabla productos de la base de datos.',
           parameters: [
             { $ref: '#/components/parameters/token' },
@@ -299,7 +299,7 @@ const swaggerOptions: Options = {
               description: '(Ok) Producto actualizado correctamente en la base de datos',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/ExitoProductosPost' },
+                  schema: { $ref: '#/components/schemas/ExitoPost' },
                 },
               },
             },
@@ -309,8 +309,8 @@ const swaggerOptions: Options = {
             500: { $ref: '#/components/responses/ServerError' },
           },
         },
-        delete: {
-          tags: ['productos', 'eliminar'],
+        patch: {
+          tags: ['Productos', 'Eliminar'],
           summary: 'Actualiza el estado de un producto a inactivo (eliminación lógica) en la base de datos.',
           parameters: [
             { $ref: '#/components/parameters/token' },
@@ -339,10 +339,10 @@ const swaggerOptions: Options = {
         },
       },
 
-        //PERFILES
+      //PERFILES
       '/api/v1/perfiles': {
         post: {
-          tags: ['perfiles', 'insertar'],
+          tags: ['Perfiles', 'Insertar'],
           summary: 'Inserta un nuevo dato a la tabla perfiles de la base de datos.',
           parameters: [{ $ref: '#/components/parameters/token' }],
           requestBody: {
@@ -355,10 +355,10 @@ const swaggerOptions: Options = {
           },
           responses: {
             200: {
-              description: '(Ok) Perfiles insertado correctamente en la base de datos',
+              description: '(Ok) Perfil insertado correctamente en la base de datos',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/ExitoPerfilesPost' },
+                  schema: { $ref: '#/components/schemas/ExitoPost' },
                 },
               },
             },
@@ -369,7 +369,7 @@ const swaggerOptions: Options = {
           },
         },
         get: {
-          tags: ['perfiles', 'listar'],
+          tags: ['Perfiles', 'Listar'],
           summary: 'Lista todos los perfiles de la tabla perfiles de la base de datos.',
           parameters: [{ $ref: '#/components/parameters/token' }],
           responses: {
@@ -377,7 +377,7 @@ const swaggerOptions: Options = {
               description: '(Ok) Lista de perfiles obtenida correctamente desde la base de datos',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/ExitoPerfilesGetID' }, // Reutilizando el esquema de éxito de listar por ID
+                  schema: { $ref: '#/components/schemas/ExitoPerfilesGetID' },
                 },
               },
             },
@@ -390,14 +390,14 @@ const swaggerOptions: Options = {
       },
       '/api/v1/perfiles/{id_perfil}': {
         get: {
-          tags: ['perfiles', 'listarID'],
+          tags: ['Perfiles', 'Listar ID'],
           summary: 'Lista el perfil por el id de la tabla perfiles de la base de datos.',
           parameters: [
             { $ref: '#/components/parameters/token' },
             {
-              name: 'id_usuario',
+              name: 'id_perfil',
               in: 'path',
-              description: 'Identificador del perfiles a obtener, necesario para la consulta específica.',
+              description: 'Identificador del perfil a obtener, necesario para la consulta específica.',
               required: true,
               schema: { type: 'integer' },
             },
@@ -418,7 +418,7 @@ const swaggerOptions: Options = {
           },
         },
         put: {
-          tags: ['perfiles', 'actualizar'],
+          tags: ['Perfiles', 'Actualizar'],
           summary: 'Actualiza un perfil existente en la tabla perfiles de la base de datos.',
           parameters: [
             { $ref: '#/components/parameters/token' },
@@ -443,7 +443,7 @@ const swaggerOptions: Options = {
               description: '(Ok) Perfil actualizado correctamente en la base de datos',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/ExitoPerfilesPost' },
+                  schema: { $ref: '#/components/schemas/ExitoPost' },
                 },
               },
             },
@@ -453,13 +453,13 @@ const swaggerOptions: Options = {
             500: { $ref: '#/components/responses/ServerError' },
           },
         },
-        delete: {
-          tags: ['perfiles', 'eliminar'],
+        patch: {
+          tags: ['Perfiles', 'Eliminar'],
           summary: 'Actualiza el estado de un perfil a inactivo (eliminación lógica) en la base de datos.',
           parameters: [
             { $ref: '#/components/parameters/token' },
             {
-              name: 'id_producto',
+              name: 'id_perfil',
               in: 'path',
               description: 'Identificador del perfil a eliminar, necesario para la operación de eliminación lógica.',
               required: true,
@@ -487,7 +487,7 @@ const swaggerOptions: Options = {
       //CATEGORIAS
     '/api/v1/categorias': {
       post: {
-        tags: ['categorias', 'insertar'],
+        tags: ['Categorias', 'Insertar'],
         summary: 'Inserta un nuevo dato a la tabla categorias de la base de datos.',
         parameters: [{ $ref: '#/components/parameters/token' }],
         requestBody: {
@@ -500,10 +500,10 @@ const swaggerOptions: Options = {
         },
         responses: {
           200: {
-            description: '(Ok) Categorias insertado correctamente en la base de datos',
+            description: '(Ok) Categoria insertada correctamente en la base de datos',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/ExitoCategoriasPost' },
+                schema: { $ref: '#/components/schemas/ExitoPost' },
               },
             },
           },
@@ -514,15 +514,15 @@ const swaggerOptions: Options = {
         },
       },
       get: {
-        tags: ['categorias', 'listar'],
-        summary: 'Lista todos las categorias de la tabla categorias de la base de datos.',
+        tags: ['Categorias', 'Listar'],
+        summary: 'Lista todas las categorias de la tabla categorias de la base de datos.',
         parameters: [{ $ref: '#/components/parameters/token' }],
         responses: {
           200: {
             description: '(Ok) Lista de categorias obtenida correctamente desde la base de datos',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/ExitoCategoriasGetID' }, // Reutilizando el esquema de éxito de listar por ID
+                schema: { $ref: '#/components/schemas/ExitoCategoriasGetID' },
               },
             },
           },
@@ -535,7 +535,7 @@ const swaggerOptions: Options = {
     },
     '/api/v1/categorias/{id_categoria}': {
       get: {
-        tags: ['categorias', 'listarID'],
+        tags: ['Categorias', 'Listar ID'],
         summary: 'Lista la categoria por el id de la tabla categorias de la base de datos.',
         parameters: [
           { $ref: '#/components/parameters/token' },
@@ -563,14 +563,14 @@ const swaggerOptions: Options = {
         },
       },
       put: {
-        tags: ['categorias', 'actualizar'],
+        tags: ['Categorias', 'Actualizar'],
         summary: 'Actualiza una categoria existente en la tabla categorias de la base de datos.',
         parameters: [
           { $ref: '#/components/parameters/token' },
           {
             name: 'id_categoria',
             in: 'path',
-            description: 'Identificador del categoria a actualizar, necesario para la operación de actualización.',
+            description: 'Identificador de la categoria a actualizar, necesario para la operación de actualización.',
             required: true,
             schema: { type: 'integer' },
           },
@@ -585,10 +585,10 @@ const swaggerOptions: Options = {
         },
         responses: {
           200: {
-            description: '(Ok) Categorias actualizado correctamente en la base de datos',
+            description: '(Ok) Categoria actualizada correctamente en la base de datos',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/ExitoCategoriasPost' },
+                schema: { $ref: '#/components/schemas/ExitoPost' },
               },
             },
           },
@@ -598,22 +598,22 @@ const swaggerOptions: Options = {
           500: { $ref: '#/components/responses/ServerError' },
         },
       },
-      delete: {
-        tags: ['categorias', 'eliminar'],
-        summary: 'Actualiza el estado de un categoria a inactivo (eliminación lógica) en la base de datos.',
+      patch: {
+        tags: ['Categorias', 'Eliminar'],
+        summary: 'Actualiza el estado de una categoria a inactivo (eliminación lógica) en la base de datos.',
         parameters: [
           { $ref: '#/components/parameters/token' },
           {
             name: 'id_categoria',
             in: 'path',
-            description: 'Identificador del categoria a eliminar, necesario para la operación de eliminación lógica.',
+            description: 'Identificador de la categoria a eliminar, necesario para la operación de eliminación lógica.',
             required: true,
             schema: { type: 'integer' },
           },
         ],
         responses: {
           200: {
-            description: '(Ok) Categorias eliminado correctamente de la base de datos',
+            description: '(Ok) Categoria eliminada correctamente de la base de datos',
             content: {
               'application/json': {
                 schema: { type: 'object', properties: { message: { type: 'string', example: 'Categoria eliminado correctamente' } } },
@@ -627,7 +627,6 @@ const swaggerOptions: Options = {
         },
       },
     },
-      
     },
     components: {
       responses: {
@@ -654,6 +653,16 @@ const swaggerOptions: Options = {
         },
       },
       schemas: {
+        ExitoPost: {
+          type: 'object',
+          properties: {
+            respuesta: {
+              type: 'integer',
+              enum: [1],
+              description: 'Bandera que nos señala si fue insertado correctamente. 1 indica éxito.',
+            },
+          },
+        },
         BodyUsuariosPost: {
           type: 'object',
           properties: {
@@ -728,16 +737,6 @@ const swaggerOptions: Options = {
             },
           },
         },
-        ExitoUsuariosPost: {
-          type: 'object',
-          properties: {
-            respuesta: {
-              type: 'integer',
-              enum: [1],
-              description: 'Bandera que nos señala si fue insertado correctamente. 1 indica éxito.',
-            },
-          },
-        },
         ExitoUsuariosGetID: {
           type: 'object',
           properties: {
@@ -790,27 +789,27 @@ const swaggerOptions: Options = {
             },
             usuario: {
               type: 'integer',
-              description: 'Usuario',
+              description: 'Usuario que registra el producto.',
             },
             nombre: {
               type: 'string',
-              description: 'nombre del producto',
+              description: 'Nombre del producto.',
             },
             descripcion: {
               type: 'string',
-              description: 'descripcion del producto',
+              description: 'Descripcion del producto.',
             },
             precio: {
               type: 'number',
-              description: 'precio del producto',
+              description: 'Precio del producto.',
             },
             stock: {
               type: 'integer',
-              description: 'stock del producto',
+              description: 'Stock de productos disponibles.',
             },
             imagen: {
               type: 'string',
-              description: 'imagen del producto',
+              description: 'Imagen del producto.',
             }
           },
         },
@@ -823,38 +822,28 @@ const swaggerOptions: Options = {
             },
             usuario: {
               type: 'integer',
-              description: 'Usuario',
+              description: 'Usuario que registra el producto.',
             },
             nombre: {
               type: 'string',
-              description: 'nombre del producto',
+              description: 'Nombre del producto.',
             },
             descripcion: {
               type: 'string',
-              description: 'descripcion del producto',
+              description: 'Descripcion del producto.',
             },
             precio: {
               type: 'number',
-              description: 'precio del producto',
+              description: 'Precio del producto.',
             },
             stock: {
               type: 'integer',
-              description: 'stock del producto',
+              description: 'Stock de productos disponibles.',
             },
             imagen: {
               type: 'string',
-              description: 'imagen del producto',
+              description: 'Imagen del producto.',
             }
-          },
-        },
-        ExitoProductosPost: {
-          type: 'object',
-          properties: {
-            respuesta: {
-              type: 'integer',
-              enum: [1],
-              description: 'Bandera que nos señala si fue insertado correctamente. 1 indica éxito.',
-            },
           },
         },
         ExitoProductosGetID: {
@@ -866,31 +855,31 @@ const swaggerOptions: Options = {
             },
             categoria: {
               type: 'integer',
-              description: 'Perfil al que se loguea el usuario (Si es vendedor o comprador).',
+              description: 'Categoria a la que pertenece el producto.',
             },
             usuario: {
               type: 'integer',
-              description: 'Nombres del usuario. Deben ser los nombres completos.',
+              description: 'Usuario que registro el producto',
             },
             nombre: {
               type: 'string',
-              description: 'Apellido Paterno del usuario. Debe ser su apellido real.',
+              description: 'Nombre del producto.',
             },
             descripcion: {
               type: 'string',
-              description: 'Apellido Materno del usuario. Debe ser su apellido real.',
+              description: 'Descripcion del producto.',
             },
             precio: {
               type: 'number',
-              description: 'Apodo del usuario. Nombre de usuario único.',
+              description: 'Precio del producto.',
             },
             stock: {
               type: 'integer',
-              description: 'Número telefónico del usuario. Debe ser un número válido.',
+              description: 'Stock de productos disponibles.',
             },
             imagen: {
               type: 'string',
-              description: 'Contacto email del usuario. Debe ser un correo electrónico válido.',
+              description: 'Imagen del producto.',
             }
           },
         },
@@ -901,7 +890,7 @@ const swaggerOptions: Options = {
           properties: {
             descripcion: {
               type: 'string',
-              description: 'descripcion del perfil',
+              description: 'Descripcion del perfil.',
             }
           },
         },
@@ -910,18 +899,8 @@ const swaggerOptions: Options = {
           properties: {
             descripcion: {
               type: 'string',
-              description: 'descripcion del perfil',
+              description: 'Descripcion del perfil.',
             }
-          },
-        },
-        ExitoPerfilesPost: {
-          type: 'object',
-          properties: {
-            respuesta: {
-              type: 'integer',
-              enum: [1],
-              description: 'Bandera que nos señala si fue insertado correctamente. 1 indica éxito.',
-            },
           },
         },
         ExitoPerfilesGetID: {
@@ -933,7 +912,7 @@ const swaggerOptions: Options = {
             },
             descripcion: {
               type: 'string',
-              description: 'descripcion del perfil',
+              description: 'Descripcion del perfil.',
             }
           },
         },
@@ -944,7 +923,7 @@ const swaggerOptions: Options = {
           properties: {
             nombre: {
               type: 'string',
-              description: 'nombre de la categoria',
+              description: 'Nombre de la categoria.',
             }
           },
         },
@@ -953,18 +932,8 @@ const swaggerOptions: Options = {
           properties: {
             nombre: {
               type: 'string',
-              description: 'nombre de la categoria',
+              description: 'Nombre de la categoria.',
             }
-          },
-        },
-        ExitoCategoriasPost: {
-          type: 'object',
-          properties: {
-            respuesta: {
-              type: 'integer',
-              enum: [1],
-              description: 'Bandera que nos señala si fue insertado correctamente. 1 indica éxito.',
-            },
           },
         },
         ExitoCategoriasGetID: {
@@ -972,11 +941,11 @@ const swaggerOptions: Options = {
           properties: {
             id_categoria: {
               type: 'integer',
-              description: 'Identificador único del categoria en la base de datos.',
+              description: 'Identificador único de la categoria en la base de datos.',
             },
             nombre: {
               type: 'string',
-              description: 'nombre del categoria',
+              description: 'Nombre de la categoria.',
             }
           },
         },
