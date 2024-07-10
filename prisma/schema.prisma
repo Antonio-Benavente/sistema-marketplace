@@ -111,7 +111,7 @@ model estados_compra {
 model bitacora {
   id_bitacora        Int       @id(map: "historial_pkey") @default(autoincrement())
   id_usuario         Int
-  accion             String    @db.Char(100)
+  accion             String    @db.VarChar(100)
   fecha_accion       DateTime  @db.Timestamptz(6)
   estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
   fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)

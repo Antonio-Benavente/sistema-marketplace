@@ -3,6 +3,11 @@ import { BodyUsuariosPost, BodyUsuariosPut, ExitoUsuariosGetID } from '../schema
 import { BodyProductosPost, BodyProductosPut, ExitoProductosGetID } from '../schemas/productoSchema';
 import { BodyPerfilesPost, BodyPerfilesPut, ExitoPerfilesGetID } from '../schemas/perfilSchema';
 import { BodyCategoriasPost, BodyCategoriasPut, ExitoCategoriasGetID } from '../schemas/categoriaSchema';
+import { BodyComprasPost, BodyComprasPut, ExitoComprasGetID } from '../schemas/compraSchema';
+import { BodyDetalleComprasPost, BodyDetalleComprasPut, ExitoDetalleComprasGetID } from '../schemas/detalleCompraSchema';
+import { BodyEstadoComprasPost, BodyEstadoComprasPut, ExitoEstadoComprasGetID } from '../schemas/estadoCompraSchema';
+import { BodyComentariosPost, BodyComentariosPut, ExitoComentariosGetID } from '../schemas/comentarioSchema';
+import { BodyBitacorasPost, BodyBitacorasPut, ExitoBitacorasGetID } from '../schemas/bitacoraSchema';
 
 const swaggerOptions: Options = {
   definition: {
@@ -33,6 +38,26 @@ const swaggerOptions: Options = {
       {
         name: 'Categorias',
         description: 'Este endpoint maneja todo el CRUD de la tabla categorias. Incluye creación, lectura, actualización y eliminación de categorias.',
+      },
+      {
+        name: 'Compras',
+        description: 'Este endpoint maneja todo el CRUD de la tabla compras. Incluye creación, lectura, actualización y eliminación de compras.',
+      },
+      {
+        name: 'DetallesCompras',
+        description: 'Este endpoint maneja todo el CRUD de la tabla detallesCompras. Incluye creación, lectura, actualización y eliminación de detallesCompras.',
+      },
+      {
+        name: 'EstadosCompra',
+        description: 'Este endpoint maneja todo el CRUD de la tabla estadosCompras. Incluye creación, lectura, actualización y eliminación de estadosCompras.',
+      },
+      {
+        name: 'Comentarios',
+        description: 'Este endpoint maneja todo el CRUD de la tabla comentarios. Incluye creación, lectura, actualización y eliminación de comentarios.',
+      },
+      {
+        name: 'Bitacoras',
+        description: 'Este endpoint maneja todo el CRUD de la tabla bitacoras. Incluye creación, lectura, actualización y eliminación de bitacoras.',
       }
     ],
     paths: {
@@ -613,6 +638,726 @@ const swaggerOptions: Options = {
         },
       },
     },
+
+    // COMPRAS
+    '/api/v1/compras': {
+      post: {
+        tags: ['Compras'],
+        summary: 'Inserta un nuevo dato a la tabla compras de la base de datos.',
+        parameters: [{ $ref: '#/components/parameters/token' }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/BodyComprasPost' },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: '(Ok) Compra insertada correctamente en la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoPost' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      get: {
+        tags: ['Compras'],
+        summary: 'Lista todas las compras de la tabla compras de la base de datos.',
+        parameters: [{ $ref: '#/components/parameters/token' }],
+        responses: {
+          200: {
+            description: '(Ok) Lista de compras obtenida correctamente desde la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoComprasGetID' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+    },
+    '/api/v1/compras/{id_compra}': {
+      get: {
+        tags: ['Compras'],
+        summary: 'Lista la compra por el id de la tabla compras de la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_compra',
+            in: 'path',
+            description: 'Identificador de la compra a obtener, necesario para la consulta específica.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        responses: {
+          200: {
+            description: '(Ok) La información de la compra se obtuvo correctamente de la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoComprasGetID' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      put: {
+        tags: ['Compras'],
+        summary: 'Actualiza una compra existente en la tabla compras de la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_compra',
+            in: 'path',
+            description: 'Identificador de la compra a actualizar, necesario para la operación de actualización.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/BodyComprasPut' },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: '(Ok) Compra actualizada correctamente en la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoPost' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      patch: {
+        tags: ['Compras'],
+        summary: 'Actualiza el estado de una compra a inactivo (eliminación lógica) en la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_compra',
+            in: 'path',
+            description: 'Identificador de la compra a eliminar, necesario para la operación de eliminación lógica.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        responses: {
+          200: {
+            description: '(Ok) Compra eliminada correctamente de la base de datos',
+            content: {
+              'application/json': {
+                schema: { type: 'object', properties: { message: { type: 'string', example: 'Compra eliminada correctamente' } } },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+    },
+
+    // DETALLE COMPRAS
+    '/api/v1/detallesCompras': {
+      post: {
+        tags: ['DetallesCompras'],
+        summary: 'Inserta un nuevo dato a la tabla detalle_compra de la base de datos.',
+        parameters: [{ $ref: '#/components/parameters/token' }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/BodyDetalleComprasPost' },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: '(Ok) Detalle ompras insertado correctamente en la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoPost' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      get: {
+        tags: ['DetallesCompras'],
+        summary: 'Lista todos los detalle compra de la tabla detalle_compra de la base de datos.',
+        parameters: [{ $ref: '#/components/parameters/token' }],
+        responses: {
+          200: {
+            description: '(Ok) Lista de detalle compra obtenida correctamente desde la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoDetalleComprasGetID' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+    },
+    '/api/v1/detallesCompras/{id_detalle}': {
+      get: {
+        tags: ['DetallesCompras'],
+        summary: 'Lista el detalle compra por el id de la tabla detalle_compra de la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_detalle',
+            in: 'path',
+            description: 'Identificador del detalle compra a obtener, necesario para la consulta específica.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        responses: {
+          200: {
+            description: '(Ok) La información del detalle compra se obtuvo correctamente de la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoDetalleComprasGetID' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      put: {
+        tags: ['DetallesCompras'],
+        summary: 'Actualiza un detalle compra existente en la tabla detalle_compra de la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_detalle',
+            in: 'path',
+            description: 'Identificador del detalle compra a actualizar, necesario para la operación de actualización.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/BodyDetalleComprasPut' },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: '(Ok) Detalle compra actualizado correctamente en la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoPost' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      patch: {
+        tags: ['DetallesCompras'],
+        summary: 'Actualiza el estado de  un detalle compra a inactivo (eliminación lógica) en la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_detalle',
+            in: 'path',
+            description: 'Identificador del detalle compra a eliminar, necesario para la operación de eliminación lógica.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        responses: {
+          200: {
+            description: '(Ok) Detalle compra eliminado correctamente de la base de datos',
+            content: {
+              'application/json': {
+                schema: { type: 'object', properties: { message: { type: 'string', example: 'Detalle compra eliminado correctamente' } } },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+    },
+
+    // ESTADOS COMPRAS
+    '/api/v1/estadosCompras': {
+      post: {
+        tags: ['EstadosCompra'],
+        summary: 'Inserta un nuevo dato a la tabla estados_compra de la base de datos.',
+        parameters: [{ $ref: '#/components/parameters/token' }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/BodyEstadoComprasPost' },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: '(Ok) Estado compra insertado correctamente en la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoPost' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      get: {
+        tags: ['EstadosCompra'],
+        summary: 'Lista todos los estados compra de la tabla estados_compra de la base de datos.',
+        parameters: [{ $ref: '#/components/parameters/token' }],
+        responses: {
+          200: {
+            description: '(Ok) Lista de estados compra obtenida correctamente desde la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoEstadoComprasGetID' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+    },
+    '/api/v1/estadosCompras/{id_estado}': {
+      get: {
+        tags: ['EstadosCompra'],
+        summary: 'Lista el estado compra por el id de la tabla estados_compra de la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_estado',
+            in: 'path',
+            description: 'Identificador del estado compra a obtener, necesario para la consulta específica.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        responses: {
+          200: {
+            description: '(Ok) La información del estado compra se obtuvo correctamente de la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoEstadoComprasGetID' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      put: {
+        tags: ['EstadosCompra'],
+        summary: 'Actualiza un estado compra existente en la tabla estados_compra de la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_estado',
+            in: 'path',
+            description: 'Identificador del estado compra a actualizar, necesario para la operación de actualización.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/BodyEstadoComprasPut' },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: '(Ok) Estado compra actualizado correctamente en la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoPost' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      patch: {
+        tags: ['EstadosCompra'],
+        summary: 'Actualiza el estado de un estado compra a inactivo (eliminación lógica) en la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_estado',
+            in: 'path',
+            description: 'Identificador del estado compra a eliminar, necesario para la operación de eliminación lógica.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        responses: {
+          200: {
+            description: '(Ok) Estado compra eliminado correctamente de la base de datos',
+            content: {
+              'application/json': {
+                schema: { type: 'object', properties: { message: { type: 'string', example: 'Estado compra eliminado correctamente' } } },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+    },
+
+    // COMENTARIOS
+    '/api/v1/comentarios': {
+      post: {
+        tags: ['Comentarios'],
+        summary: 'Inserta un nuevo dato a la tabla comentarios de la base de datos.',
+        parameters: [{ $ref: '#/components/parameters/token' }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/BodyComentariosPost' },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: '(Ok) Comentario insertado correctamente en la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoPost' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      get: {
+        tags: ['Comentarios'],
+        summary: 'Lista todos los comentarios de la tabla comentarios de la base de datos.',
+        parameters: [{ $ref: '#/components/parameters/token' }],
+        responses: {
+          200: {
+            description: '(Ok) Lista de comentarios obtenida correctamente desde la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoComentariosGetID' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+    },
+    '/api/v1/comentarios/{id_comentario}': {
+      get: {
+        tags: ['Comentarios'],
+        summary: 'Lista el comentario por el id de la tabla comentarios de la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_comentario',
+            in: 'path',
+            description: 'Identificador del comentario a obtener, necesario para la consulta específica.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        responses: {
+          200: {
+            description: '(Ok) La información del comentario se obtuvo correctamente de la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoComentariosGetID' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      put: {
+        tags: ['Comentarios'],
+        summary: 'Actualiza un comentario existente en la tabla comentarios de la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_comentario',
+            in: 'path',
+            description: 'Identificador del comentario a actualizar, necesario para la operación de actualización.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/BodyComentariosPut' },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: '(Ok) Comentario actualizado correctamente en la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoPost' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      patch: {
+        tags: ['Comentarios'],
+        summary: 'Actualiza el estado de un comentario a inactivo (eliminación lógica) en la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_comentario',
+            in: 'path',
+            description: 'Identificador del comentario a eliminar, necesario para la operación de eliminación lógica.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        responses: {
+          200: {
+            description: '(Ok) Comentario eliminado correctamente de la base de datos',
+            content: {
+              'application/json': {
+                schema: { type: 'object', properties: { message: { type: 'string', example: 'Comentario eliminado correctamente' } } },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+    },
+
+    // BITACORAS
+    '/api/v1/bitacoras': {
+      post: {
+        tags: ['Bitacoras'],
+        summary: 'Inserta un nuevo dato a la tabla bitacoras de la base de datos.',
+        parameters: [{ $ref: '#/components/parameters/token' }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/BodyBitacorasPost' },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: '(Ok) Bitacora insertada correctamente en la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoPost' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      get: {
+        tags: ['Bitacoras'],
+        summary: 'Lista todas las bitacoras de la tabla bitacoras de la base de datos.',
+        parameters: [{ $ref: '#/components/parameters/token' }],
+        responses: {
+          200: {
+            description: '(Ok) Lista de bitacoras obtenida correctamente desde la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoBitacorasGetID' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+    },
+    '/api/v1/bitacoras/{id_bitacora}': {
+      get: {
+        tags: ['Bitacoras'],
+        summary: 'Lista la bitacora por el id de la tabla bitacoras de la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_bitacora',
+            in: 'path',
+            description: 'Identificador de la bitacora a obtener, necesario para la consulta específica.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        responses: {
+          200: {
+            description: '(Ok) La información de la bitacora se obtuvo correctamente de la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoBitacorasGetID' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      put: {
+        tags: ['Bitacoras'],
+        summary: 'Actualiza una bitacora existente en la tabla bitacoras de la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_bitacora',
+            in: 'path',
+            description: 'Identificador de la bitacora a actualizar, necesario para la operación de actualización.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/BodyBitacorasPut' },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: '(Ok) Bitacora actualizada correctamente en la base de datos',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ExitoPost' },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+      patch: {
+        tags: ['Bitacoras'],
+        summary: 'Actualiza el estado de una bitacora a inactivo (eliminación lógica) en la base de datos.',
+        parameters: [
+          { $ref: '#/components/parameters/token' },
+          {
+            name: 'id_bitacora',
+            in: 'path',
+            description: 'Identificador de la bitacora a eliminar, necesario para la operación de eliminación lógica.',
+            required: true,
+            schema: { type: 'integer' },
+          },
+        ],
+        responses: {
+          200: {
+            description: '(Ok) Bitacora eliminada correctamente de la base de datos',
+            content: {
+              'application/json': {
+                schema: { type: 'object', properties: { message: { type: 'string', example: 'Bitacora eliminada correctamente' } } },
+              },
+            },
+          },
+          400: { $ref: '#/components/responses/BadRequest' },
+          401: { $ref: '#/components/responses/Unauthorized' },
+          404: { $ref: '#/components/responses/NotFound' },
+          500: { $ref: '#/components/responses/ServerError' },
+        },
+      },
+    },
     },
     components: {
       responses: {
@@ -668,6 +1413,31 @@ const swaggerOptions: Options = {
         BodyCategoriasPost,
         BodyCategoriasPut,
         ExitoCategoriasGetID,
+
+        // COMPRAS RESPUESTAS
+        BodyComprasPost,
+        BodyComprasPut,
+        ExitoComprasGetID,
+
+        // DETALLE COMPRAS RESPUESTAS
+        BodyDetalleComprasPost,
+        BodyDetalleComprasPut,
+        ExitoDetalleComprasGetID,
+
+        // ESTADO COMPRAS RESPUESTAS
+        BodyEstadoComprasPost,
+        BodyEstadoComprasPut,
+        ExitoEstadoComprasGetID,
+
+        // COMENTARIOS RESPUESTAS
+        BodyComentariosPost,
+        BodyComentariosPut,
+        ExitoComentariosGetID,
+
+        // BITACORAS RESPUESTAS
+        BodyBitacorasPost,
+        BodyBitacorasPut,
+        ExitoBitacorasGetID
       },
     },
   },

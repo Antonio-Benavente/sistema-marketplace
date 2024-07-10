@@ -24,7 +24,8 @@ export const listarEstadosCompras = async () => {
 export const obtenerEstadoCompra = async (idEstadoCompra: number) => {
     const estadoCompra: estados_compra =  await prisma.estados_compra.findUnique({
         where: {
-            id_estado: idEstadoCompra
+            id_estado: idEstadoCompra,
+            estado_auditoria: '1'
         }
     });
     return fromPrismaEstadoCompra(estadoCompra);

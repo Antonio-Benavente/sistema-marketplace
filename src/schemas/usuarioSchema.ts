@@ -124,17 +124,17 @@ const usuarioBaseSchema = {
   perfil: Joi.number(),
   nombres: Joi.string(),
   apellidoPaterno: Joi.string()
-      .max(150),
+    .max(150),
   apellidoMaterno: Joi.string()
-      .max(150),
+    .max(150),
   nombreUsuario: Joi.string()
-      .max(150),
+    .max(150),
   celular: Joi.number()
-      .min(9),
+    .min(9),
   email: Joi.string()
-      .max(1024),
+    .max(1024),
   password: Joi.string()
-      .max(1024)
+    .max(1024)
 };
 
 export const insertarUsuarioSchema = Joi.object({
