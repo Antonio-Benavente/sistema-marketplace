@@ -12,3 +12,4 @@ Este proyecto es la parte backend de una plataforma de marketplace que permite r
 - npm install --save-dev typescript @types/node
 - npx prisma db pull
 - npx prisma generate
+- npm i swagger-jsdoc swagger-ui-express
